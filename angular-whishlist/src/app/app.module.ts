@@ -84,10 +84,10 @@ export function init_app(appLoadService: AppLoadService): () => Promise<any>  {
 class AppLoadService {
   constructor(private store: Store<AppState>, private http: HttpClient) { }
   async intializeDestinosViajesState(): Promise<any> {
-    const headers: HttpHeaders = new HttpHeaders({'X-API-TOKEN': 'token-seguridad'});
-    const req = new HttpRequest('GET', APP_CONFIG_VALUE.apiEndpoint + '/my', { headers: headers });
-    const response: any = await this.http.request(req).toPromise();
-    this.store.dispatch(new InitMyDataAction(response.body));
+    // const headers: HttpHeaders = new HttpHeaders({'X-API-TOKEN': 'token-seguridad'});
+    // const req = new HttpRequest('GET', APP_CONFIG_VALUE.apiEndpoint + '/my', { headers: headers });
+    // const response: any = await this.http.request(req).toPromise();
+    // this.store.dispatch(new InitMyDataAction(response.body));
   }
 }
 

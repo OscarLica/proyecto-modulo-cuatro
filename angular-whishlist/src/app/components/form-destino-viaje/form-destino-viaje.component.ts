@@ -50,7 +50,7 @@ export class FormDestinoViajeComponent implements OnInit {
       filter(text => text.length > 2),
       debounceTime(120),
       distinctUntilChanged(),
-      switchMap((text: string) => ajax(this.config.apiEndpoint + '/ciudades?q=' + text))
+      switchMap(() => ajax("/assets/datos.json")) //ajax(this.config.apiEndpoint + '/ciudades?q=' + text))
     ).subscribe(ajaxResponse => this.searchResults = ajaxResponse.response);
   }
 

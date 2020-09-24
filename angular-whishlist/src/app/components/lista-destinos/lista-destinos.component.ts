@@ -20,6 +20,10 @@ export class ListaDestinosComponent implements OnInit {
     ) {
     this.onItemAdded = new EventEmitter();
     this.updates = [];
+    this.destinosApiClient.suscribeOnChange((d:DestinoViaje) => {
+      if(d == null) return;
+      this.updates.push(`se ha elegido ${d.nombre}`);
+    });
   }
 
   ngOnInit() {

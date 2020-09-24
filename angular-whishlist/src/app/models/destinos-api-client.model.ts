@@ -7,11 +7,12 @@ import {
   } from './destinos-viajes-state.model';
 import {AppState, APP_CONFIG, AppConfig, MyDatabase, db} from './../app.module';
 import { HttpRequest, HttpHeaders, HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class DestinosApiClient {
   destinos: DestinoViaje[] = [];
-
+  current:Subject<DestinoViaje> = new BehaviorSubject<DestinoViaje>(null);
   constructor(
     private store: Store<AppState>,
     @Inject(forwardRef(() => APP_CONFIG)) private config: AppConfig,
@@ -19,7 +20,7 @@ export class DestinosApiClient {
   ) {
     this.store
       .select(state => state.destinos)
-      .subscribe((data) => {
+      .subscribe(data => {
         console.log('destinos sub store');
         console.log(data);
         this.destinos = data.items;
@@ -55,6 +56,13 @@ export class DestinosApiClient {
 
   elegir(d: DestinoViaje) {
     // aqui incovariamos al servidor
+    this.destinos.forEach(x => x.setSelected(false));
+    d.setSelected(true);
+    this.current.next(d);
     this.store.dispatch(new ElegidoFavoritoAction(d));
+  }
+
+  suscribeOnChange(fn):void{
+    this.current.subscribe(fn);
   }
 }
